@@ -35,7 +35,7 @@ export default function HomePage() {
           }}
         >
           {/* Colonne Gauche : Titre percutant, sous-titre court et CTA */}
-          <div style={{ spaceY: "20px" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
             <span
               style={{
                 fontFamily: "'IBM Plex Mono', monospace",
