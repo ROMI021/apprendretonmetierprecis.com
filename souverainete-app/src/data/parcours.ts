@@ -46,6 +46,7 @@ export const PARCOURS_DATA: Parcours[] = [
         title: "La Numération Binaire : Théorie et Méthodes de Conversion",
         tome: "Tome 0",
         duration: "45 min",
+        note: "Cette session vous apprend la langue fondamentale des processeurs. Sans maîtrise du binaire, il est impossible de comprendre l'allocation mémoire, les registres matériels ou la sécurité bas niveau.",
         htmlContent: `
           <div class="chapter">
               <p>Dans la vie courante, nous exprimons les nombres en <strong>base 10 (numération décimale)</strong>. Cela signifie que nous disposons de dix symboles distincts : {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}. Dans un système électronique numérique (comme un calculateur de vol ou un processeur), les composantes physiques ne possèdent que deux états stables : tension haute (1) ou tension nulle (0). Nous devons donc utiliser la <strong>base 2 (numération binaire)</strong>.</p>
@@ -149,6 +150,7 @@ export const PARCOURS_DATA: Parcours[] = [
         title: "La Numération Hexadécimale (Base 16) et l'Inter-conversion",
         tome: "Tome 0",
         duration: "45 min",
+        note: "Cette session vous enseigne l'écriture compacte de la mémoire. L'hexadécimal permet de lire et manipuler des adresses de bus et des dumps d'octets sans vous noyer dans des suites de 0 et de 1.",
         htmlContent: `
           <div class="chapter">
               <p>Travailler directement avec des chaînes de 32 ou 64 bits est extrêmement fastidieux pour les ingénieurs. La <strong>base 16 (hexadécimale)</strong> offre une représentation condensée directe du binaire : <strong>exactement 1 chiffre hexadécimal représente un bloc de 4 bits (un quartet)</strong>.</p>
@@ -214,6 +216,7 @@ export const PARCOURS_DATA: Parcours[] = [
         title: "Les Portes Logiques et l'Algèbre de Boole",
         tome: "Tome 0",
         duration: "50 min",
+        note: "Cette session introduit les briques de décision de l'informatique. Chaque instruction conditionnelle dans vos programmes s'appuie directement sur les portes logiques et l'algèbre booléenne.",
         htmlContent: `
           <div class="chapter">
               <p>L'algèbre de Boole traite de variables logiques qui ne peuvent prendre que deux valeurs : 0 (Faux) ou 1 (Vrai). Les opérations fondamentales sont réalisées physiquement par des <strong>portes logiques</strong>.</p>
@@ -304,6 +307,7 @@ export const PARCOURS_DATA: Parcours[] = [
         title: "Défi Sournois #1 — Le Phénomène de Dépassement (Overflow)",
         tome: "Tome 0",
         duration: "60 min",
+        note: "Cette session vous fait découvrir un piège mortel en ingénierie informatique : l'overflow mémoire. Vous comprendrez pourquoi un calcul mathématiquement correct peut faire crasher un missile ou une fusée.",
         htmlContent: `
           <div class="chapter">
               <p>Les registres physiques d'un processeur ont une taille fixe (8 bits, 16 bits, 32 bits). Contrairement aux mathématiques pures où les nombres sont infinis, la mémoire d'un ordinateur est <strong>bornée</strong>.</p>
@@ -366,6 +370,7 @@ if (vitesse > 200) {
         title: "Examen de Maîtrise Rédigé (Tome 0)",
         tome: "Tome 0",
         duration: "30 min",
+        note: "Cette session est une évaluation de rigueur. Elle garantit que les notions fondamentales de calcul binaire, hexadécimal et logique sont ancrées de manière infaillible avant d'aborder le C.",
         htmlContent: `
           <div class="chapter">
               <div class="theorem-box">

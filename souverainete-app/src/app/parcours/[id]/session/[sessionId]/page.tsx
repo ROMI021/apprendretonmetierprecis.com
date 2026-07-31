@@ -114,6 +114,41 @@ export default function SessionPage({ params }: { params: Promise<{ id: string; 
           <div className="reader-eyebrow">{session.tome} · Session {session.id} sur {parcours.sessions.length}</div>
           <h1 className="reader-title">{session.title}</h1>
 
+          {/* Encadré Note : À quoi sert cette session ? */}
+          {session.note && (
+            <div style={{
+              background: "#f0fdf4",
+              borderLeft: "4px solid #16a34a",
+              padding: "16px 20px",
+              marginBottom: "32px",
+              borderRadius: "0 6px 6px 0"
+            }}>
+              <div style={{
+                fontFamily: "'IBM Plex Sans', sans-serif",
+                fontSize: "0.75rem",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+                color: "#15803d",
+                marginBottom: "4px",
+                display: "flex",
+                alignItems: "center",
+                gap: "6px"
+              }}>
+                <span>💡</span> À quoi sert cette session ?
+              </div>
+              <p style={{
+                fontFamily: "'IBM Plex Sans', sans-serif",
+                fontSize: "0.9rem",
+                color: "#166534",
+                lineHeight: "1.5",
+                margin: 0
+              }}>
+                {session.note}
+              </p>
+            </div>
+          )}
+
           {/* Exact HTML content with MathJax rendering */}
           <div
             dangerouslySetInnerHTML={{ __html: session.htmlContent }}
