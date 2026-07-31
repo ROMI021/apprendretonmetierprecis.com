@@ -108,8 +108,9 @@ export default function SessionPage({ params }: { params: Promise<{ id: string; 
             <span>/</span>
             <span>Session {session.id}</span>
           </div>
-          <div className="topbar-right reader-topbar-info">
-            ⏱ {session.duration}
+          <div className="topbar-right" style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            <PomodoroTimer />
+            <span className="reader-topbar-info">⏱ {session.duration}</span>
           </div>
         </header>
 
@@ -121,9 +122,6 @@ export default function SessionPage({ params }: { params: Promise<{ id: string; 
         <div className="reader-wrapper">
           <div className="reader-eyebrow">{session.tome} · Session {session.id} sur {parcours.sessions.length}</div>
           <h1 className="reader-title">{session.title}</h1>
-
-          {/* Minuteur Pomodoro d'étude */}
-          <PomodoroTimer />
 
           {/* Encadré Note : À quoi sert cette session ? */}
           {session.note && (
