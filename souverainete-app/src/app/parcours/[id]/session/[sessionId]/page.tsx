@@ -5,6 +5,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PARCOURS_DATA } from "@/data/parcours";
 import PomodoroTimer from "@/components/PomodoroTimer";
+import NavigationLayout from "@/components/NavigationLayout";
 
 declare global {
   interface Window {
@@ -38,81 +39,20 @@ export default function SessionPage({ params }: { params: Promise<{ id: string; 
   const progressPct = Math.round((sessionNum / parcours.sessions.length) * 100);
 
   return (
-    <div className="app-shell">
-      {/* Sidebar */}
-      <aside className="sidebar">
-        <div className="sidebar-logo">
-          <div className="sidebar-logo-mark">
-            <div className="sidebar-logo-icon">🛡️</div>
-            <div>
-              <div className="sidebar-logo-text">Souveraineté</div>
-              <div className="sidebar-logo-sub">Académie Technique</div>
-            </div>
-          </div>
+    <NavigationLayout currentParcoursId={parcours.id} currentSessionId={session.id}>
+      <header className="topbar">
+        <div className="topbar-breadcrumb">
+          <Link href="/">Parcours</Link>
+          <span>/</span>
+          <Link href={`/parcours/${parcours.id}`}>{parcours.icon} {parcours.title.split(" ").slice(0,3).join(" ")}</Link>
+          <span>/</span>
+          <span>Session {session.id}</span>
         </div>
-
-        <div className="sidebar-section">
-          <div className="sidebar-section-label">Navigation</div>
-          <Link href="/" className="sidebar-nav-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-            Tous les Parcours
-          </Link>
-          <Link href={`/parcours/${parcours.id}`} className="sidebar-nav-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6"/></svg>
-            Vue d&apos;ensemble
-          </Link>
-          <Link href="/journal" className="sidebar-nav-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            Journal de bord
-          </Link>
+        <div className="topbar-right" style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <PomodoroTimer />
+          <span className="reader-topbar-info">⏱ {session.duration}</span>
         </div>
-
-        {/* Sessions list in sidebar */}
-        <div className="sidebar-section" style={{flex:1}}>
-          <div className="sidebar-section-label">Tome 0 — Sessions</div>
-          {parcours.sessions.map((s) => (
-            <Link
-              key={s.id}
-              href={`/parcours/${parcours.id}/session/${s.id}`}
-              prefetch={true}
-              className={`sidebar-nav-item ${s.id === sessionNum ? "active" : ""}`}
-              style={{paddingLeft:"16px", fontSize:"0.78rem"}}
-            >
-              <div className={`nav-dot ${s.id === sessionNum ? "current" : s.id < sessionNum ? "done" : ""}`} />
-              <span>S{s.id} · {s.title.split(" ").slice(0, 4).join(" ")}…</span>
-            </Link>
-          ))}
-        </div>
-
-        {/* Progress */}
-        <div style={{padding:"16px",borderTop:"1px solid var(--nav-border)"}}>
-          <div style={{fontFamily:"'IBM Plex Mono',monospace",fontSize:"0.65rem",color:"var(--nav-text)",marginBottom:"8px"}}>
-            Progression du Tome 0
-          </div>
-          <div style={{height:"3px",background:"#21262d",borderRadius:"2px"}}>
-            <div style={{height:"100%",background:"var(--nav-accent)",borderRadius:"2px",width:`${progressPct}%`}} />
-          </div>
-          <div style={{fontFamily:"'IBM Plex Mono',monospace",fontSize:"0.62rem",color:"var(--nav-text)",marginTop:"5px"}}>
-            {sessionNum}/{parcours.sessions.length} sessions
-          </div>
-        </div>
-      </aside>
-
-      {/* Content */}
-      <div className="content-area">
-        <header className="topbar">
-          <div className="topbar-breadcrumb">
-            <Link href="/">Parcours</Link>
-            <span>/</span>
-            <Link href={`/parcours/${parcours.id}`}>{parcours.icon} {parcours.title.split(" ").slice(0,3).join(" ")}</Link>
-            <span>/</span>
-            <span>Session {session.id}</span>
-          </div>
-          <div className="topbar-right" style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <PomodoroTimer />
-            <span className="reader-topbar-info">⏱ {session.duration}</span>
-          </div>
-        </header>
+      </header>
 
         {/* Thin session progress stripe */}
         <div className="progress-stripe">
@@ -191,6 +131,4 @@ export default function SessionPage({ params }: { params: Promise<{ id: string; 
           </div>
         </div>
       </div>
-    </div>
-  );
-}
+    </NavigationLayout>
