@@ -11,6 +11,8 @@ export interface Parcours {
   id: string;
   title: string;
   subtitle: string;
+  category: string;
+  tags: string[];
   icon: string;
   color: string;
   badge: string;
@@ -26,6 +28,8 @@ export const PARCOURS_DATA: Parcours[] = [
     id: "systemes-critiques",
     title: "Ingénieur Systèmes Critiques & Défense",
     subtitle: "Maîtrise du métal, de la mémoire et des logiciels de sécurité militaire",
+    category: "Défense & Systèmes Critiques",
+    tags: ["c", "c++", "ada", "spark", "rust", "binaire", "memoire", "calculateur", "missile", "armement", "securite"],
     icon: "🛡️",
     color: "from-blue-600 to-indigo-900",
     badge: "Parcours Principal",
@@ -417,6 +421,8 @@ if (vitesse > 200) {
     id: "robotique-drones",
     title: "Spécialiste Drones & Autonomie Embarquée",
     subtitle: "Conception de pilotes automatiques, navigation inertielle et commande de vol",
+    category: "Aérospatial & Autonomie",
+    tags: ["drone", "pilote", "vol", "kalman", "pid", "mavlink", "autonomie", "capteur", "aero"],
     icon: "🛰️",
     color: "from-emerald-600 to-teal-900",
     badge: "Spécialisation",
@@ -435,6 +441,8 @@ if (vitesse > 200) {
     id: "cyber-securite-souveraine",
     title: "Architecte Cybersécurité & Cryptographie",
     subtitle: "Sécurisation des communications militaires, cryptographie matérielle & HSM",
+    category: "Cybersécurité & Réseaux",
+    tags: ["crypto", "cryptographie", "hsm", "rust", "reseau", "cyber", "securite", "pki", "clef"],
     icon: "🔐",
     color: "from-amber-600 to-red-950",
     badge: "Sécurité",
