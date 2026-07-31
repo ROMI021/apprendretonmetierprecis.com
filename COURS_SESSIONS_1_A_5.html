@@ -41,6 +41,18 @@
             padding: 0;
         }
 
+        /* Protection globale anti-découpage parenthèses et formules */
+        body, .chapter, .theorem-box, .method-box, .case-box, .exercise-section, .solution-details {
+            word-break: keep-all !important;
+            overflow-wrap: normal !important;
+            hyphens: none !important;
+        }
+
+        mjx-container, code {
+            white-space: nowrap !important;
+            display: inline-block !important;
+        }
+
         body {
             font-family: 'Crimson Pro', Georgia, 'Times New Roman', serif;
             background-color: var(--paper-bg);

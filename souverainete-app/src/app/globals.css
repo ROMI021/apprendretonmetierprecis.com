@@ -537,12 +537,31 @@ body {
   border-bottom: 1px solid var(--content-border);
 }
 
-/* ─── COURS CONTENT (Identique au HTML standalone) ──────────────────────────── */
-.chapter {
-  font-family: 'Crimson Pro', 'Georgia', serif;
-  font-size: 1.12rem;
-  line-height: 1.75;
-  color: #1c1d1f;
+/* ─── PROTECTION GLOBALE ANTI-DÉCOUPAGE DES PARENTHÈSES ET FORMULES ────────── */
+.reader-wrapper,
+.chapter,
+.theorem-box,
+.method-box,
+.case-box,
+.exercise-section,
+.solution-details {
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+}
+
+/* Forcer MathJax et toute formule/parenthèse inline à ne jamais sauter à la ligne au milieu */
+.reader-wrapper mjx-container,
+.chapter mjx-container,
+.theorem-box mjx-container,
+.method-box mjx-container,
+.case-box mjx-container,
+.exercise-section mjx-container,
+.solution-details mjx-container,
+.chapter span.inline-math,
+.chapter code {
+  white-space: nowrap !important;
+  display: inline-block !important;
 }
 
 .chapter p { margin: 1em 0; }
@@ -563,6 +582,7 @@ body {
   margin: 24px 0;
   border-radius: 0 4px 4px 0;
   overflow-x: auto;
+  word-break: keep-all;
 }
 
 .theorem-title {
@@ -583,6 +603,7 @@ body {
   margin: 24px 0;
   border-radius: 0 4px 4px 0;
   overflow-x: auto;
+  word-break: keep-all;
 }
 
 .method-title {
@@ -603,6 +624,7 @@ body {
   margin: 24px 0;
   border-radius: 0 4px 4px 0;
   overflow-x: auto;
+  word-break: keep-all;
 }
 
 .case-title {
