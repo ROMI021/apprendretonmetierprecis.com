@@ -1,11 +1,12 @@
 import Link from "next/link";
+import Image from "next/image";
 import { PARCOURS_DATA } from "@/data/parcours";
 import NavigationLayout from "@/components/NavigationLayout";
 import CourseExplorer from "@/components/CourseExplorer";
 
 export const metadata = {
-  title: "Souveraineté — Académie des Métiers Techniques Souverains",
-  description: "Plateforme de formation pas-à-pas aux métiers d'ingénierie critique, drones autonomes et cybersécurité.",
+  title: "Souveraineté — Apprendre ton Métier Précis",
+  description: "Plateforme d'apprentissage technique et d'ingénierie.",
 };
 
 export default function HomePage() {
@@ -13,142 +14,140 @@ export default function HomePage() {
     <NavigationLayout>
       <header className="topbar">
         <div className="topbar-breadcrumb">
-          <span>Portail des Métiers Souverains</span>
+          <span>Accueil</span>
         </div>
         <div className="topbar-right">
-          <span className="badge badge-blue">3 Parcours Métiers</span>
-          <span className="badge badge-slate">560 Sessions</span>
+          <span className="badge badge-blue">Formations Techniques</span>
         </div>
       </header>
 
       <div className="home-wrapper">
-        {/* Banner Hero Global */}
-        <div style={{ marginBottom: "32px" }}>
-          <div className="page-eyebrow">Académie des Métiers Souverains</div>
-          <h1 className="page-title">
-            Choisis ton Métier d&apos;Avenir.<br />
-            Bâtis l&apos;Indépendance Technologique.
-          </h1>
-          <p className="page-subtitle" style={{ maxWidth: "780px", marginBottom: "24px" }}>
-            Des parcours d&apos;apprentissage rigoureux conçus pour former les bâtisseurs des systèmes de demain.
-            De la théorie mathématique jusqu&apos;au matériel physique, sans survol ni jargon inexpliqué.
-          </p>
-        </div>
-
-        {/* Chiffres & Piliers Globaux */}
+        {/* HERO SECTION INSPIRÉE DU DESIGN RECHERCHÉ (2 COLONNES ÉPURÉES) */}
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-            gap: "16px",
-            marginBottom: "36px",
+            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gap: "40px",
+            alignItems: "center",
+            marginBottom: "56px",
+            paddingBottom: "32px",
+            borderBottom: "1px solid var(--content-border)",
           }}
         >
+          {/* Colonne Gauche : Titre percutant, sous-titre court et CTA */}
+          <div style={{ spaceY: "20px" }}>
+            <span
+              style={{
+                fontFamily: "'IBM Plex Mono', monospace",
+                fontSize: "0.75rem",
+                fontWeight: 700,
+                color: "var(--accent)",
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+                display: "block",
+                marginBottom: "12px",
+              }}
+            >
+              Formation à distance
+            </span>
+
+            <h1
+              style={{
+                fontSize: "2.2rem",
+                fontWeight: 800,
+                color: "var(--ink-dark)",
+                lineHeight: 1.15,
+                letterSpacing: "-0.03em",
+                marginBottom: "16px",
+              }}
+            >
+              Maîtrise Ton Métier Précis. Pas-à-Pas.
+            </h1>
+
+            <p
+              style={{
+                fontSize: "0.95rem",
+                color: "var(--ink-muted)",
+                lineHeight: 1.6,
+                marginBottom: "28px",
+              }}
+            >
+              Apprends des compétences techniques et d&apos;ingénierie réelles grâce à des cours découpés en sessions quotidiennes concrètes.
+            </p>
+
+            <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+              <a
+                href="#courses-section"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  padding: "12px 24px",
+                  background: "var(--accent)",
+                  color: "#ffffff",
+                  borderRadius: "6px",
+                  fontWeight: 600,
+                  fontSize: "0.88rem",
+                  textDecoration: "none",
+                  transition: "background 0.15s ease",
+                }}
+              >
+                Explorer les Métiers →
+              </a>
+            </div>
+          </div>
+
+          {/* Colonne Droite : Illustration Épurée */}
           <div
             style={{
-              padding: "16px 20px",
-              background: "#f8fafc",
-              border: "1px solid var(--content-border)",
-              borderRadius: "8px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              position: "relative",
             }}
           >
-            <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "1.6rem", fontWeight: 700, color: "var(--accent)" }}>
-              3
-            </div>
-            <div style={{ fontSize: "0.82rem", fontWeight: 600, color: "var(--ink-dark)" }}>Parcours Métiers Complémentaires</div>
-            <div style={{ fontSize: "0.75rem", color: "var(--ink-muted)", marginTop: "2px" }}>Systèmes, Drones & Cyber</div>
-          </div>
-
-          <div
-            style={{
-              padding: "16px 20px",
-              background: "#f8fafc",
-              border: "1px solid var(--content-border)",
-              borderRadius: "8px",
-            }}
-          >
-            <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "1.6rem", fontWeight: 700, color: "#16a34a" }}>
-              560
-            </div>
-            <div style={{ fontSize: "0.82rem", fontWeight: 600, color: "var(--ink-dark)" }}>Sessions Quotidiennes</div>
-            <div style={{ fontSize: "0.75rem", color: "var(--ink-muted)", marginTop: "2px" }}>45 à 60 minutes par jour</div>
-          </div>
-
-          <div
-            style={{
-              padding: "16px 20px",
-              background: "#f8fafc",
-              border: "1px solid var(--content-border)",
-              borderRadius: "8px",
-            }}
-          >
-            <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "1.6rem", fontWeight: 700, color: "#92400e" }}>
-              100%
-            </div>
-            <div style={{ fontSize: "0.82rem", fontWeight: 600, color: "var(--ink-dark)" }}>Rigueur Mathématique</div>
-            <div style={{ fontSize: "0.75rem", color: "var(--ink-muted)", marginTop: "2px" }}>Maths pures avant le code</div>
-          </div>
-        </div>
-
-        {/* Explorateur avec Recherche Floue & Filtres de Catégories */}
-        <CourseExplorer parcoursList={PARCOURS_DATA} />
-
-        {/* Méthodologie Pédagogique */}
-        <div
-          style={{
-            background: "#ffffff",
-            border: "1.5px solid var(--ink-dark)",
-            borderRadius: "8px",
-            padding: "28px 32px",
-            marginBottom: "40px"
-          }}
-        >
-          <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", color: "var(--accent)", marginBottom: "8px" }}>
-            La Méthode d&apos;Apprentissage Souveraine
-          </div>
-          <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--ink-dark)", marginBottom: "16px" }}>
-            Comment fonctionne chaque session ?
-          </h3>
-
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "20px" }}>
-            <div>
-              <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.8rem", fontWeight: 700, color: "#2563eb", marginBottom: "4px" }}>
-                1. Théorie Mathématique
-              </div>
-              <p style={{ fontSize: "0.82rem", color: "var(--ink-body)", lineHeight: 1.55 }}>
-                Chaque notion commence par les théorèmes, équations et principes logiques fondamentaux.
-              </p>
-            </div>
-
-            <div>
-              <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.8rem", fontWeight: 700, color: "#b45309", marginBottom: "4px" }}>
-                2. Décomposition Rédigée
-              </div>
-              <p style={{ fontSize: "0.82rem", color: "var(--ink-body)", lineHeight: 1.55 }}>
-                Des exemples étape par étape expliqués clairement comme dans un manuel de mathématiques pures.
-              </p>
-            </div>
-
-            <div>
-              <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.8rem", fontWeight: 700, color: "#b91c1c", marginBottom: "4px" }}>
-                3. Cas Réel Défense
-              </div>
-              <p style={{ fontSize: "0.82rem", color: "var(--ink-body)", lineHeight: 1.55 }}>
-                Mise en situation concrète sur un calculateur de vol, un drone autonome ou un HSM cryptographique.
-              </p>
-            </div>
-
-            <div>
-              <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.8rem", fontWeight: 700, color: "#15803d", marginBottom: "4px" }}>
-                4. Exercice sur Papier
-              </div>
-              <p style={{ fontSize: "0.82rem", color: "var(--ink-body)", lineHeight: 1.55 }}>
-                Mise en pratique manuelle obligatoire avec correction rédigée intégrale.
-              </p>
+            <div
+              style={{
+                width: "100%",
+                maxWidth: "460px",
+                borderRadius: "12px",
+                overflow: "hidden",
+                border: "1px solid var(--content-border)",
+                boxShadow: "0 10px 30px rgba(0, 0, 0, 0.05)",
+                background: "#ffffff",
+              }}
+            >
+              <Image
+                src="/hero-illustration.png"
+                alt="Formation à distance"
+                width={500}
+                height={350}
+                style={{ width: "100%", height: "auto", display: "block" }}
+                priority
+              />
             </div>
           </div>
         </div>
 
+        {/* SECTION MÉTIERS ET RECHERCHE */}
+        <div id="courses-section">
+          <div style={{ marginBottom: "20px" }}>
+            <h2
+              style={{
+                fontSize: "1.1rem",
+                fontWeight: 700,
+                color: "var(--ink-dark)",
+                textTransform: "uppercase",
+                letterSpacing: "0.04em",
+              }}
+            >
+              Tous les Métiers Disponibles
+            </h2>
+          </div>
+
+          {/* Composant de Recherche & Filtres */}
+          <CourseExplorer parcoursList={PARCOURS_DATA} />
+        </div>
       </div>
     </NavigationLayout>
   );
