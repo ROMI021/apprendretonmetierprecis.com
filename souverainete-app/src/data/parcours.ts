@@ -3,12 +3,14 @@ export interface Session {
   title: string;
   tome: string;
   duration: string;
-  maths: string;
-  lesson: string;
+  mathsTheorem: string;
+  mathsContent: string;
+  lessonTitle: string;
+  lessonContent: string;
+  defenseTitle: string;
   defenseCase: string;
   exercise: {
     question: string;
-    hint?: string;
     correction: string;
   };
 }
@@ -49,68 +51,82 @@ export const PARCOURS_DATA: Parcours[] = [
     sessions: [
       {
         id: 1,
-        title: "La Numération Binaire & Puissances de 2",
+        title: "La Numération Binaire : Théorie et Méthodes de Conversion",
         tome: "Tome 0",
         duration: "45 min",
-        maths: "Tout nombre entier N s'écrit N = Σ (a_k × 2^k). En binaire, les chiffres a_k sont 0 ou 1.",
-        lesson: "Les ordinateurs utilisent des transistors à 2 états (0 et 1). Pour convertir 10110101₂ en décimal : (1×128) + (0×64) + (1×32) + (1×16) + (0×8) + (1×4) + (0×2) + (1×1) = 181.",
-        defenseCase: "Les capteurs de trappe de missile envoient un octet brut. Bit 7 à 1 = Trappe Ouverte, Bit 0 à 1 = Fusible Armé.",
+        mathsTheorem: "Théorème 1.1 — Décomposition Poids-Position : Tout nombre entier N exprimé dans une base B s'écrit N = ∑ (a_k × B^k). En base 2 (B=2), les coefficients a_k ne peuvent prendre que 0 ou 1.",
+        mathsContent: "Pour convertir 10110101₂ en décimal : (1×2⁷) + (0×2⁶) + (1×2⁵) + (1×2⁴) + (0×2³) + (1×2²) + (0×2¹) + (1×2⁰) = 128 + 32 + 16 + 4 + 1 = 181.",
+        lessonTitle: "Méthode Rédigée 1.2 — La Division Posée Pas à Pas",
+        lessonContent: "Pour convertir N = 157 en binaire, on effectue les divisions euclidiennes par 2 :\n1) 157 ÷ 2 = 78, reste 1 (Bit 0 - LSB)\n2) 78 ÷ 2 = 39, reste 0 (Bit 1)\n3) 39 ÷ 2 = 19, reste 1 (Bit 2)\n4) 19 ÷ 2 = 9, reste 1 (Bit 3)\n5) 9 ÷ 2 = 4, reste 1 (Bit 4)\n6) 4 ÷ 2 = 2, reste 0 (Bit 5)\n7) 2 ÷ 2 = 1, reste 0 (Bit 6)\n8) 1 ÷ 2 = 0, reste 1 (Bit 7 - MSB)\nLecture de BAS en HAUT → 10011101₂.",
+        defenseTitle: "Application Concrète — Système d'Armement",
+        defenseCase: "Dans le calculateur de guidage d'un drone, un accéléromètre envoie une valeur brute de 157. L'unité de contrôle logique lit directement l'octet 10011101₂. Si le Bit 7 (valeur 128) est à 1, le système active immédiatement la correction de tangage.",
         exercise: {
-          question: "Convertis le nombre binaire 11000001₂ en nombre décimal.",
-          hint: "Additionne 128 + 64 + 1",
-          correction: "11000001₂ = (1×128) + (1×64) + 1 = 193 en décimal."
+          question: "1. Convertis le nombre décimal N = 214 en binaire en posant toutes les divisions par 2.\n2. Convertis le nombre binaire B = 01101010₂ en décimal en écrivant la somme détaillée.",
+          correction: "1. 214÷2=107(r0), 107÷2=53(r1), 53÷2=26(r1), 26÷2=13(r0), 13÷2=6(r1), 6÷2=3(r0), 3÷2=1(r1), 1÷2=0(r1). Lecture de bas en haut → 11010110₂.\n2. 01101010₂ = (0×128)+(1×64)+(1×32)+(0×16)+(1×8)+(0×4)+(1×2)+(0×1) = 64+32+8+2 = 106."
         }
       },
       {
         id: 2,
-        title: "L'Hexadécimal (Base 16) & Groupement par 4 bits",
+        title: "La Numération Hexadécimale (Base 16) et l'Inter-conversion",
         tome: "Tome 0",
         duration: "45 min",
-        maths: "1 symbole Hexadécimal (0-9, A-F) réunit exactement 4 bits (quartet). 0xF = 15 = 1111₂.",
-        lesson: "Pour convertir 11011010₂ en Hexa, découpe en 2 quartets : 1101₂ (13 = D) et 1010₂ (10 = A). Résultat = 0xDA.",
-        defenseCase: "Les adresses mémoire des calculateurs ARM (ex: 0x4000C000) pointent directement sur les cartes accélérométriques.",
+        mathsTheorem: "Théorème 2.1 — La Correspondance des Symboles Hexadécimaux : La base 16 utilise 16 symboles {0..9, A..F}. Exactement 1 chiffre hexadécimal représente un bloc de 4 bits (quartet).",
+        mathsContent: "Table : 0000=0 ... 1010=A (10), 1011=B (11), 1100=C (12), 1101=D (13), 1110=E (14), 1111=F (15).",
+        lessonTitle: "Méthode Rédigée 2.1 — Conversion Binaire vers Hexadécimal",
+        lessonContent: "Soit B = 11010111₂. On découpe en 2 quartets :\nQuartet Gauche = 1101₂ (13 = D)\nQuartet Droit = 0111₂ (7 = 7)\nRésultat : 0xD7. Pour H = 0x3F8 en décimal : (3×16²) + (15×16¹) + (8×16⁰) = 768 + 240 + 8 = 1016.",
+        defenseTitle: "Application Concrète — Adresses Mémoire",
+        defenseCase: "Dans les documentations techniques d'un microcontrôleur ARM, les adresses des cartes électroniques sont écrites en hexadécimal (ex: 0x4000C000). C'est l'emplacement exact en mémoire où le processeur lit l'accéléromètre.",
         exercise: {
-          question: "Convertis 11110011₂ en hexadécimal.",
-          correction: "1111₂ = F et 0011₂ = 3. Le résultat est 0xF3."
+          question: "1. Convertis 10101111₂ directement en hexadécimal.\n2. Convertis 0xB4 en binaire sur 8 bits.\n3. Calcule la valeur décimale de 0xA5.",
+          correction: "1. 1010₂ = A, 1111₂ = F → 0xAF.\n2. B = 11 (1011₂), 4 = (0100₂) → 10110100₂.\n3. 0xA5 = (10×16) + 5 = 160 + 5 = 165."
         }
       },
       {
         id: 3,
-        title: "Portes Logiques (AND, OR, NOT, XOR)",
+        title: "Les Portes Logiques et l'Algèbre de Boole",
         tome: "Tome 0",
         duration: "50 min",
-        maths: "Algèbre de Boole : AND (A·B), OR (A+B), NOT (Ā), XOR (A⊕B).",
-        lesson: "AND nécessite 2 entrées VRAI. OR nécessite au moins 1 entrée VRAI. XOR exige des entrées DIFFÉRENTES.",
-        defenseCase: "Sécurité de tir d'hélicoptère : Tir = Détente (1) AND Sécurité_Désactivée (1). Si la sécurité est activée (0), le coup ne part pas.",
+        mathsTheorem: "Théorème 3.1 — Les 4 Opérateurs Booléens de Base : AND (A·B), OR (A+B), NOT (Ā), XOR (A⊕B).",
+        mathsContent: "AND : Sortie=1 si A=1 ET B=1. OR : Sortie=1 si au moins une entrée=1. NOT : Inverse la valeur. XOR : Sortie=1 si entrées différentes.",
+        lessonTitle: "Méthode Rédigée 3.1 — Évaluation d'une Équation Logique Complexe",
+        lessonContent: "Évaluer S = (A · B̄) + C pour A=1, B=1, C=1 :\nÉtape 1 : B̄ = 0\nÉtape 2 : A · B̄ = 1 · 0 = 0\nÉtape 3 : S = 0 + C = 0 + 1 = 1.",
+        defenseTitle: "Application Concrète — Sécurité de Tir",
+        defenseCase: "Sécurité de tir d'hélicoptère : Tir = (Alti_OK · Obstaclē) · Autorisation. Si Obstacle = 1 (Obstaclē = 0), le tir vaut 0 (bloqué) même si le pilote appuie sur la détente.",
         exercise: {
-          question: "Calcule le résultat de (1 AND 0) OR (NOT 0 AND 1).",
-          correction: "(1 AND 0) = 0. NOT 0 = 1, donc (1 AND 1) = 1. Résultat : 0 OR 1 = 1 (VRAI)."
+          question: "Soit Tir = (Alti_OK · Obstaclē) · Autorisation. Calcule la valeur de Tir si Alti_OK=1, Obstacle=0, Autorisation=1.",
+          correction: "Obstacle = 0 donc Obstaclē = 1. Tir = (1 · 1) · 1 = 1 (Tir autorisé !)."
         }
       },
       {
         id: 4,
-        title: "Défi Sournois #1 — L'Overflow (Dépassement de Capacité)",
+        title: "Défi Sournois #1 — Le Phénomène de Dépassement (Overflow)",
         tome: "Tome 0",
         duration: "60 min",
-        maths: "Sur N bits, max = 2^N - 1. Si on ajoute 1 à la valeur max, le bit de poids fort est perdu et la valeur retombe à 0.",
-        lesson: "Sur 8 bits, 255 + 1 = 0 ! C'est ce bug qui a fait exploser la fusée Ariane 5 en 1996.",
-        defenseCase: "Un capteur de vitesse de turbine codé sur 8 bits qui passe de 250 à 260 RPM sera lu comme 4 RPM, empêchant la mise en sécurité du moteur.",
+        mathsTheorem: "Théorème 4.1 — Plage de Valeurs d'un Entier Non Signé de N bits : Bornes [0 à 2^N - 1]. Sur 8 bits, max = 255.",
+        mathsContent: "Posons 255 (11111111₂) + 1 = 100000000₂. Le 9-ème bit de gauche ne rentre pas dans le registre de 8 bits ! Il est ignoré, le registre retombe à 00000000₂ (0).",
+        lessonTitle: "Le Piège de Code — Crash d'Ariane 5",
+        lessonContent: "Code : unsigned char vitesse = 250; vitesse = vitesse + 10; (Vraie vitesse = 260). 260 mod 256 = 4. L'ordinateur croit que la turbine tourne à 4 RPM au lieu de 260 RPM et ne coupe pas le moteur !",
+        defenseTitle: "Analyse du Crash Historique",
+        defenseCase: "Le 4 juin 1996, la fusée Ariane 5 a explosé 37 secondes après son décollage à cause d'un nombre 64 bits converti sans vérification en 16 bits (Overflow).",
         exercise: {
-          question: "Une variable de 8 bits (max 255) contient 200. On lui ajoute 70. Quelle sera sa valeur finale ?",
+          question: "Une variable de 8 bits contient la valeur 200. On lui ajoute 70. Quelle sera la valeur finale retenue par le registre ?",
           correction: "200 + 70 = 270. Modulo 256 : 270 - 256 = 14."
         }
       },
       {
         id: 5,
-        title: "Examen de Maîtrise du Tome 0",
+        title: "Examen de Maîtrise Rédigé (Tome 0)",
         tome: "Tome 0",
         duration: "30 min",
-        maths: "Synthèse : Binaire, Hexadécimal, Logique et Bornes mémoire.",
-        lesson: "Évaluation chronométrée sur papier.",
-        defenseCase: "Validation des compétences de base avant le passage au C.",
+        mathsTheorem: "Consignes d'Examen — Rédiger l'ensemble des calculs de conversion et d'évaluation logique.",
+        mathsContent: "P1 : Division euclidienne de N = 186.\nP2 : Conversion de 10111010₂ en Hexa et Décimal.\nP3 : Évaluation de S = Ā · (B + C) avec A=0, B=1, C=0.",
+        lessonTitle: "Grille d'Évaluation",
+        lessonContent: "P1 : 186 = 10111010₂ (4 pts)\nP2 : 0xBA = 186 (3 pts)\nP3 : S = 1 (3 pts)",
+        defenseTitle: "Validation de Certification",
+        defenseCase: "Validation formelle des fondations avant l'accès au Tome I (Langage C et allocation mémoire).",
         exercise: {
-          question: "Convertis 186 en binaire par divisions successives.",
-          correction: "186÷2=93(r0), 93÷2=46(r1), 46÷2=23(r0), 23÷2=11(r1), 11÷2=5(r1), 5÷2=2(r1), 2÷2=1(r0), 1÷2=0(r1). Résultat : 10111010₂."
+          question: "Résous les 3 problèmes ci-dessus sur papier.",
+          correction: "P1: 10111010₂. P2: 0xBA (186₁₀). P3: S = 1."
         }
       }
     ]
