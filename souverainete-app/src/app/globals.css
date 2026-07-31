@@ -634,12 +634,14 @@ body {
 
 .table-responsive {
   width: 100%;
-  overflow-x: auto;
+  overflow-x: auto;          /* Défilement horizontal si tableau trop large */
+  overflow-y: visible;
   margin: 16px 0;
+  -webkit-overflow-scrolling: touch; /* Défilement fluide sur mobile */
 }
 
 table.math-table {
-  width: 100%;
+  /* width: 100% retiré : le tableau prend sa largeur naturelle (nowrap) */
   border-collapse: collapse;
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 0.82rem;
@@ -648,14 +650,18 @@ table.math-table {
 table.math-table th,
 table.math-table td {
   border: 1px solid #e2e8f0;
-  padding: 7px 10px;
+  padding: 7px 12px;
   text-align: center;
+  white-space: nowrap;      /* Empêche tout retour à la ligne dans une cellule */
+  word-break: keep-all;     /* Ne coupe jamais un mot ou une expression */
+  hyphens: none;            /* Aucun trait d'union automatique */
 }
 
 table.math-table th {
   background-color: #f8fafc;
   color: #0f172a;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .exercise-section {

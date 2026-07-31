@@ -3,6 +3,7 @@ export interface SessionData {
   title: string;
   tome: string;
   duration: string;
+  note: string;   // Objectif pédagogique affiché en haut de chaque session
   htmlContent: string;
 }
 
