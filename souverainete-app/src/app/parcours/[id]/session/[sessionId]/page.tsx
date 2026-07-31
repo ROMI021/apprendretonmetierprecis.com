@@ -4,6 +4,7 @@ import { use, useState, useEffect } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PARCOURS_DATA } from "@/data/parcours";
+import PomodoroTimer from "@/components/PomodoroTimer";
 
 declare global {
   interface Window {
@@ -113,6 +114,9 @@ export default function SessionPage({ params }: { params: Promise<{ id: string; 
         <div className="reader-wrapper">
           <div className="reader-eyebrow">{session.tome} · Session {session.id} sur {parcours.sessions.length}</div>
           <h1 className="reader-title">{session.title}</h1>
+
+          {/* Minuteur Pomodoro d'étude */}
+          <PomodoroTimer />
 
           {/* Encadré Note : À quoi sert cette session ? */}
           {session.note && (
