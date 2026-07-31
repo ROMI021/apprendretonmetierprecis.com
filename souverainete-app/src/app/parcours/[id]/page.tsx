@@ -5,109 +5,177 @@ import { PARCOURS_DATA } from "@/data/parcours";
 export default async function ParcoursPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const parcours = PARCOURS_DATA.find((p) => p.id === id);
+  if (!parcours) notFound();
 
-  if (!parcours) {
-    notFound();
-  }
+  const completedCount = 0; // persisté côté client dans la version suivante
+  const progressPct = Math.round((completedCount / parcours.sessionsCount) * 100);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans">
-      {/* Navigation Topbar */}
-      <header className="border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="text-sm font-mono text-emerald-400 hover:underline">
-            ← Retour aux métiers
+    <div className="app-shell">
+      {/* Sidebar */}
+      <aside className="sidebar">
+        <div className="sidebar-logo">
+          <div className="sidebar-logo-mark">
+            <div className="sidebar-logo-icon">🛡️</div>
+            <div>
+              <div className="sidebar-logo-text">Souveraineté</div>
+              <div className="sidebar-logo-sub">Académie Technique</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="sidebar-section">
+          <div className="sidebar-section-label">Navigation</div>
+          <Link href="/" className="sidebar-nav-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Tous les Parcours
           </Link>
-          <span className="font-mono text-xs text-slate-400">{parcours.title}</span>
-        </div>
-      </header>
-
-      <main className="max-w-6xl mx-auto px-6 py-10 space-y-12">
-        {/* Banner Parcours */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8 space-y-4">
-          <div className="flex items-center space-x-3">
-            <span className="text-4xl">{parcours.icon}</span>
-            <div>
-              <h1 className="text-3xl font-extrabold text-white">{parcours.title}</h1>
-              <p className="text-slate-400 text-sm">{parcours.subtitle}</p>
-            </div>
-          </div>
-          <p className="text-slate-300 text-sm leading-relaxed max-w-3xl">
-            {parcours.description}
-          </p>
-
-          <div className="flex flex-wrap gap-6 pt-4 border-t border-slate-800 text-xs font-mono">
-            <div>
-              <span className="text-slate-500">Durée : </span>
-              <span className="text-white font-bold">{parcours.durationMonths} mois</span>
-            </div>
-            <div>
-              <span className="text-slate-500">Volume : </span>
-              <span className="text-emerald-400 font-bold">{parcours.sessionsCount} sessions</span>
-            </div>
-            <div>
-              <span className="text-slate-500">Sessions prêtes : </span>
-              <span className="text-amber-400 font-bold">{parcours.sessions.length} sessions (Sessions 1 à 5)</span>
-            </div>
-          </div>
+          <Link href="/journal" className="sidebar-nav-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Journal de bord
+          </Link>
         </div>
 
-        {/* Structure des Tomes */}
-        <div className="space-y-8">
-          <h2 className="text-2xl font-bold text-white tracking-tight border-b border-slate-800 pb-3">
-            Programme du Métier par Tomes
-          </h2>
+        {/* Tree des sessions dans la sidebar */}
+        <div className="sidebar-section" style={{flex:1,overflowY:"auto"}}>
+          <div className="sidebar-section-label">{parcours.title.split(":")[0]}</div>
 
-          {/* Tome 0 (Disponible avec les sessions 1 à 5) */}
-          <div className="bg-slate-900/60 border border-emerald-500/30 rounded-xl p-6 space-y-4">
-            <div className="flex justify-between items-center">
-              <h3 className="text-lg font-bold text-emerald-400">
-                Tome 0 : Fondations Mathématiques & Logiques
-              </h3>
-              <span className="px-2.5 py-1 text-xs font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-md">
-                Disponible (Sessions 1 à 5)
-              </span>
-            </div>
+          {parcours.tomes.map((tome, ti) => (
+            <div key={ti}>
+              <div style={{
+                padding:"8px 16px 4px",
+                fontFamily:"'IBM Plex Mono',monospace",
+                fontSize:"0.62rem",
+                color:"#4a5568",
+                textTransform:"uppercase",
+                letterSpacing:"0.08em",
+                marginTop: ti > 0 ? "4px" : 0
+              }}>
+                {`T${ti}`} · {tome.split(":")[1]?.trim() ?? tome}
+              </div>
 
-            <div className="grid grid-cols-1 gap-3 pt-2">
-              {parcours.sessions.map((session) => (
+              {ti === 0 && parcours.sessions.map((session) => (
                 <Link
                   key={session.id}
                   href={`/parcours/${parcours.id}/session/${session.id}`}
-                  className="flex items-center justify-between p-4 bg-slate-950/80 hover:bg-slate-800/80 border border-slate-800 rounded-lg transition group"
+                  className="sidebar-nav-item"
+                  style={{paddingLeft:"24px", fontSize:"0.78rem"}}
                 >
-                  <div className="flex items-center space-x-4">
-                    <span className="w-8 h-8 rounded-full bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-mono font-bold text-xs">
-                      {session.id}
-                    </span>
-                    <div>
-                      <h4 className="text-sm font-semibold text-white group-hover:text-emerald-400 transition-colors">
-                        Session {session.id} : {session.title}
-                      </h4>
-                      <p className="text-xs text-slate-400 font-mono mt-0.5">{session.duration}</p>
-                    </div>
-                  </div>
-                  <span className="text-xs font-mono text-emerald-400 group-hover:translate-x-1 transition-transform">
-                    Ouvrir la session →
-                  </span>
+                  <div className="nav-dot current" />
+                  S{session.id} · {session.title.split(":")[0].replace("La ","").replace("Les ","").replace("Le ","").substring(0,22)}
                 </Link>
               ))}
+
+              {ti > 0 && (
+                <div className="sidebar-nav-item locked" style={{paddingLeft:"24px",fontSize:"0.78rem",opacity:0.4,cursor:"default"}}>
+                  <div className="nav-dot" style={{borderStyle:"dashed"}} />
+                  Sessions à venir…
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </aside>
+
+      {/* Content */}
+      <div className="content-area">
+        <header className="topbar">
+          <div className="topbar-breadcrumb">
+            <Link href="/">Parcours</Link>
+            <span>/</span>
+            <span>{parcours.title}</span>
+          </div>
+          <div className="topbar-right">
+            <span className="badge badge-blue">{parcours.durationMonths} mois</span>
+            <span className="badge badge-slate">{parcours.sessionsCount} sessions</span>
+          </div>
+        </header>
+
+        {/* Progress stripe */}
+        <div className="progress-stripe">
+          <div className="progress-stripe-fill" style={{width:`${progressPct}%`}} />
+        </div>
+
+        {/* Header parcours */}
+        <div className="parcours-header">
+          <div className="parcours-header-row">
+            <div style={{fontSize:"2rem"}}>{parcours.icon}</div>
+            <div>
+              <h1 style={{fontSize:"1.25rem",fontWeight:700,color:"var(--ink-dark)",letterSpacing:"-0.02em",marginBottom:"2px"}}>
+                {parcours.title}
+              </h1>
+              <div style={{fontFamily:"'IBM Plex Mono',monospace",fontSize:"0.72rem",color:"var(--ink-muted)"}}>
+                {parcours.subtitle}
+              </div>
             </div>
           </div>
 
-          {/* Tomes suivants (En attente de demande) */}
-          <div className="space-y-4">
-            {parcours.tomes.slice(1).map((tomeTitle, index) => (
-              <div key={index} className="bg-slate-900/30 border border-slate-800/60 rounded-xl p-5 opacity-60">
-                <div className="flex justify-between items-center">
-                  <h4 className="text-sm font-semibold text-slate-300">{tomeTitle}</h4>
-                  <span className="text-xs font-mono text-slate-500">En attente de développement</span>
-                </div>
+          <div className="parcours-stats-bar">
+            <div className="stat-item">
+              <strong>{parcours.sessions.length}</strong>
+              Sessions disponibles
+            </div>
+            <div className="stat-divider" />
+            <div className="stat-item">
+              <strong>{parcours.sessionsCount}</strong>
+              Sessions totales
+            </div>
+            <div className="stat-divider" />
+            <div className="stat-item">
+              <strong>{progressPct}%</strong>
+              Complété
+              <div className="progress-bar-wrap">
+                <div className="progress-bar-fill" style={{width:`${progressPct}%`}} />
               </div>
-            ))}
+            </div>
           </div>
         </div>
-      </main>
+
+        {/* Session list */}
+        <div className="sessions-wrapper">
+          {/* Tome 0 — Disponible */}
+          <div className="tome-section">
+            <div className="tome-label">
+              Tome 0 — Fondations Mathématiques & Logiques
+              <span className="badge badge-blue" style={{marginLeft:"10px"}}>Disponible</span>
+            </div>
+
+            {parcours.sessions.map((session) => (
+              <Link
+                key={session.id}
+                href={`/parcours/${parcours.id}/session/${session.id}`}
+                className="session-row"
+              >
+                <span className="session-num">S{String(session.id).padStart(2,"0")}</span>
+                <div className="session-dot available" />
+                <div className="session-info">
+                  <div className="session-title">{session.title}</div>
+                  <div className="session-duration">⏱ {session.duration}</div>
+                </div>
+                <span className="session-badge">Disponible</span>
+              </Link>
+            ))}
+          </div>
+
+          {/* Tomes suivants — Verrouillés */}
+          {parcours.tomes.slice(1).map((tomeTitle, index) => (
+            <div key={index} className="tome-section">
+              <div className="tome-label">
+                {tomeTitle}
+                <span className="badge badge-slate" style={{marginLeft:"10px"}}>En attente</span>
+              </div>
+              <div className="session-row locked">
+                <span className="session-num">—</span>
+                <div className="session-dot locked" />
+                <div className="session-info">
+                  <div className="session-title">Sessions à développer sur demande</div>
+                  <div className="session-duration">Non disponible</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

@@ -4,84 +4,135 @@ import { useState } from "react";
 import Link from "next/link";
 
 export default function JournalPage() {
-  const [streak, setStreak] = useState(1);
-  const [letterWritten, setLetterWritten] = useState(false);
+  const [streak] = useState(1);
+  const [checks, setChecks] = useState([false, false, false, false]);
+  const [saved, setSaved] = useState(false);
+
+  const toggle = (i: number) => setChecks(c => c.map((v, idx) => idx === i ? !v : v));
+
+  const rituals = [
+    "Fermer tous les réseaux sociaux et notifications",
+    "Lire la déclaration de souveraineté à voix haute",
+    "Relire les notes de la dernière session validée",
+    "Lancer le timer — 45 minutes sans interruption",
+  ];
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans">
-      {/* Top Navbar */}
-      <header className="border-b border-slate-800 bg-slate-900/60 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="text-xs font-mono text-emerald-400 hover:underline">
-            ← Retour à l'accueil
-          </Link>
-          <span className="font-mono text-xs text-slate-400">Journal de l'Architecte</span>
-        </div>
-      </header>
-
-      <main className="max-w-4xl mx-auto px-6 py-10 space-y-10">
-        {/* Banner Streak */}
-        <div className="bg-gradient-to-r from-emerald-950/60 to-slate-900 border border-emerald-500/30 rounded-2xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="space-y-2">
-            <span className="text-xs font-mono text-emerald-400 tracking-widest uppercase">Discipline & Ancrage</span>
-            <h1 className="text-3xl font-extrabold text-white">Mon Journal de Bord</h1>
-            <p className="text-sm text-slate-400">
-              &quot;Je ne me forme pas pour un emploi. Je me forme pour que l'Afrique n'ait plus jamais à mendier sa sécurité.&quot;
-            </p>
-          </div>
-
-          <div className="bg-slate-950 p-6 rounded-xl border border-emerald-500/30 text-center min-w-[200px]">
-            <span className="text-xs font-mono text-slate-400">CHAÎNE ACTUELLE</span>
-            <div className="text-4xl font-extrabold font-mono text-emerald-400 my-1">
-              🔥 {streak} {streak > 1 ? "jours" : "jour"}
+    <div className="app-shell">
+      <aside className="sidebar">
+        <div className="sidebar-logo">
+          <div className="sidebar-logo-mark">
+            <div className="sidebar-logo-icon">🛡️</div>
+            <div>
+              <div className="sidebar-logo-text">Souveraineté</div>
+              <div className="sidebar-logo-sub">Académie Technique</div>
             </div>
-            <span className="text-[10px] font-mono text-slate-500">Record : 560 sessions</span>
           </div>
         </div>
+        <div className="sidebar-section">
+          <div className="sidebar-section-label">Navigation</div>
+          <Link href="/" className="sidebar-nav-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Tous les Parcours
+          </Link>
+          <Link href="/journal" className="sidebar-nav-item active">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Journal de bord
+          </Link>
+        </div>
+      </aside>
 
-        {/* Rituel Quotidien */}
-        <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-6 space-y-4">
-          <h2 className="text-base font-bold text-white flex items-center gap-2">
-            ⚡ Mon Rituel du Matin (5 minutes)
-          </h2>
-          <div className="space-y-3 text-sm text-slate-300">
-            <label className="flex items-center gap-3 p-3 bg-slate-950/60 rounded-lg border border-slate-800/80 cursor-pointer hover:border-slate-700">
-              <input type="checkbox" className="w-4 h-4 accent-emerald-500 rounded" />
-              <span>1. Fermer toutes les applications inutiles (réseaux sociaux, notifications)</span>
-            </label>
-            <label className="flex items-center gap-3 p-3 bg-slate-950/60 rounded-lg border border-slate-800/80 cursor-pointer hover:border-slate-700">
-              <input type="checkbox" className="w-4 h-4 accent-emerald-500 rounded" />
-              <span>2. Lire la déclaration de souveraineté à voix haute</span>
-            </label>
-            <label className="flex items-center gap-3 p-3 bg-slate-950/60 rounded-lg border border-slate-800/80 cursor-pointer hover:border-slate-700">
-              <input type="checkbox" className="w-4 h-4 accent-emerald-500 rounded" />
-              <span>3. Relire la dernière session validée</span>
-            </label>
-            <label className="flex items-center gap-3 p-3 bg-slate-950/60 rounded-lg border border-slate-800/80 cursor-pointer hover:border-slate-700">
-              <input type="checkbox" className="w-4 h-4 accent-emerald-500 rounded" />
-              <span>4. Lancer le timer de 45 minutes d'étude sans interruption</span>
-            </label>
+      <div className="content-area">
+        <header className="topbar">
+          <div className="topbar-breadcrumb">
+            <Link href="/">Parcours</Link>
+            <span>/</span>
+            <span>Journal de Bord</span>
+          </div>
+        </header>
+
+        <div className="journal-wrapper">
+          <div className="page-eyebrow">Discipline & Ancrage</div>
+          <h1 className="page-title">Journal de Bord</h1>
+          <p className="page-subtitle">Ton rituel de 5 minutes avant chaque session.</p>
+
+          {/* Streak */}
+          <div className="streak-card">
+            <div>
+              <div style={{fontFamily:"'IBM Plex Mono',monospace",fontSize:"0.72rem",color:"var(--ink-muted)",marginBottom:"4px",textTransform:"uppercase",letterSpacing:"0.08em"}}>
+                Chaîne de sessions
+              </div>
+              <div className="streak-number">{streak} <span style={{fontSize:"1.5rem"}}>🔥</span></div>
+              <div className="streak-label">{streak > 1 ? "jours consécutifs" : "jour — C'est le début"}</div>
+            </div>
+            <div style={{textAlign:"right"}}>
+              <div style={{fontFamily:"'IBM Plex Mono',monospace",fontSize:"0.7rem",color:"var(--ink-muted)"}}>Objectif</div>
+              <div style={{fontFamily:"'IBM Plex Mono',monospace",fontSize:"1.4rem",fontWeight:700,color:"var(--ink-dark)"}}>560</div>
+              <div style={{fontFamily:"'IBM Plex Mono',monospace",fontSize:"0.7rem",color:"var(--ink-muted)"}}>sessions totales</div>
+            </div>
+          </div>
+
+          {/* Rituel */}
+          <div className="ritual-card">
+            <div className="ritual-header">Rituel du Matin (5 min)</div>
+            {rituals.map((r, i) => (
+              <label key={i} className="ritual-item" style={{cursor:"pointer"}}>
+                <input type="checkbox" checked={checks[i]} onChange={() => toggle(i)} />
+                <span style={{textDecoration: checks[i] ? "line-through" : "none", color: checks[i] ? "var(--ink-muted)" : "inherit"}}>
+                  {r}
+                </span>
+              </label>
+            ))}
+          </div>
+
+          {/* Lettre engagement */}
+          <div className="ritual-card">
+            <div className="ritual-header">Lettre à l&apos;Afrique de 2036</div>
+            <div style={{padding:"20px"}}>
+              <p style={{fontSize:"0.82rem",color:"var(--ink-muted)",marginBottom:"12px",fontStyle:"italic"}}>
+                Pourquoi fais-tu cela ? Écris-le. Relis-le tous les matins.
+              </p>
+              <textarea
+                rows={6}
+                placeholder="Dans dix ans, l'Afrique doit concevoir ses propres systèmes de défense. Je m'y engage parce que…"
+                style={{
+                  width:"100%",
+                  padding:"12px 14px",
+                  border:"1px solid var(--content-border)",
+                  borderRadius:"4px",
+                  fontSize:"0.88rem",
+                  fontFamily:"'IBM Plex Sans',sans-serif",
+                  color:"var(--ink-dark)",
+                  background:"#fafafa",
+                  resize:"vertical",
+                  outline:"none",
+                  lineHeight:1.65
+                }}
+                onFocus={e => (e.target.style.borderColor = "var(--accent)")}
+                onBlur={e => (e.target.style.borderColor = "var(--content-border)")}
+              />
+              <div style={{marginTop:"12px"}}>
+                <button
+                  onClick={() => setSaved(true)}
+                  style={{
+                    padding:"8px 20px",
+                    background: saved ? "#15803d" : "var(--accent)",
+                    color:"white",
+                    border:"none",
+                    borderRadius:"4px",
+                    fontSize:"0.82rem",
+                    fontWeight:600,
+                    cursor:"pointer",
+                    fontFamily:"'IBM Plex Sans',sans-serif"
+                  }}
+                >
+                  {saved ? "✓ Sauvegardé" : "Sauvegarder"}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-
-        {/* Lettre d'Engagement */}
-        <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-6 space-y-4">
-          <h2 className="text-base font-bold text-white flex items-center gap-2">
-            🌍 Lettre à l'Afrique de 2036
-          </h2>
-          <textarea
-            rows={5}
-            placeholder="Écris ton engagement personnel pour l'Afrique de 2036..."
-            className="w-full bg-slate-950 text-slate-200 border border-slate-800 rounded-lg p-4 text-sm font-mono focus:border-emerald-500 focus:outline-none"
-          />
-          <button
-            onClick={() => setLetterWritten(true)}
-            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-mono text-xs font-bold rounded-lg transition"
-          >
-            {letterWritten ? "✓ Lettre Sauvegardée" : "Sauvegarder ma Lettre"}
-          </button>
-        </div>
-      </main>
+      </div>
     </div>
   );
 }
