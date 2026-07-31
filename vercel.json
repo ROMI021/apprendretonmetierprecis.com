@@ -1,0 +1,5 @@
+{
+  "buildCommand": "cd souverainete-app && npm install && npm run build",
+  "outputDirectory": "souverainete-app/.next",
+  "framework": "nextjs"
+}

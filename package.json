@@ -1,0 +1,10 @@
+{
+  "name": "souverainete-root",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm run dev --prefix souverainete-app",
+    "build": "npm run build --prefix souverainete-app",
+    "start": "npm run start --prefix souverainete-app"
+  }
+}
