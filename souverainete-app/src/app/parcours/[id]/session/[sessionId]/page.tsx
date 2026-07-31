@@ -44,7 +44,7 @@ export default function SessionPage({ params }: { params: Promise<{ id: string; 
         <div className="topbar-breadcrumb">
           <Link href="/">Parcours</Link>
           <span>/</span>
-          <Link href={`/parcours/${parcours.id}`}>{parcours.icon} {parcours.title.split(" ").slice(0,3).join(" ")}</Link>
+          <Link href={`/parcours/${parcours.id}`}>{parcours.icon} {parcours.title.split(" ").slice(0, 3).join(" ")}</Link>
           <span>/</span>
           <span>Session {session.id}</span>
         </div>
@@ -54,25 +54,28 @@ export default function SessionPage({ params }: { params: Promise<{ id: string; 
         </div>
       </header>
 
-        {/* Thin session progress stripe */}
-        <div className="progress-stripe">
-          <div className="progress-stripe-fill" style={{width:`${progressPct}%`}} />
-        </div>
+      {/* Thin session progress stripe */}
+      <div className="progress-stripe">
+        <div className="progress-stripe-fill" style={{ width: `${progressPct}%` }} />
+      </div>
 
-        <div className="reader-wrapper">
-          <div className="reader-eyebrow">{session.tome} · Session {session.id} sur {parcours.sessions.length}</div>
-          <h1 className="reader-title">{session.title}</h1>
+      <div className="reader-wrapper">
+        <div className="reader-eyebrow">{session.tome} · Session {session.id} sur {parcours.sessions.length}</div>
+        <h1 className="reader-title">{session.title}</h1>
 
-          {/* Encadré Note : À quoi sert cette session ? */}
-          {session.note && (
-            <div style={{
+        {/* Encadré Note : À quoi sert cette session ? */}
+        {session.note && (
+          <div
+            style={{
               background: "#f0fdf4",
               borderLeft: "4px solid #16a34a",
               padding: "16px 20px",
               marginBottom: "32px",
-              borderRadius: "0 6px 6px 0"
-            }}>
-              <div style={{
+              borderRadius: "0 6px 6px 0",
+            }}
+          >
+            <div
+              style={{
                 fontFamily: "'IBM Plex Sans', sans-serif",
                 fontSize: "0.75rem",
                 fontWeight: 700,
@@ -82,53 +85,59 @@ export default function SessionPage({ params }: { params: Promise<{ id: string; 
                 marginBottom: "4px",
                 display: "flex",
                 alignItems: "center",
-                gap: "6px"
-              }}>
-                <span>💡</span> À quoi sert cette session ?
-              </div>
-              <p style={{
+                gap: "6px",
+              }}
+            >
+              <span>💡</span> À quoi sert cette session ?
+            </div>
+            <p
+              style={{
                 fontFamily: "'IBM Plex Sans', sans-serif",
                 fontSize: "0.9rem",
                 color: "#166534",
                 lineHeight: "1.5",
-                margin: 0
-              }}>
-                {session.note}
-              </p>
-            </div>
+                margin: 0,
+              }}
+            >
+              {session.note}
+            </p>
+          </div>
+        )}
+
+        {/* Exact HTML content avec rendu MathJax ciblé */}
+        <div
+          id="course-content-container"
+          dangerouslySetInnerHTML={{ __html: session.htmlContent }}
+        />
+
+        {/* Validation & Navigation ultra-rapide */}
+        <div className="reader-nav">
+          {prevId ? (
+            <Link href={`/parcours/${parcours.id}/session/${prevId}`} prefetch={true} className="btn-nav">
+              ← Session {prevId}
+            </Link>
+          ) : (
+            <div />
           )}
 
-          {/* Exact HTML content avec rendu MathJax ciblé */}
-          <div
-            id="course-content-container"
-            dangerouslySetInnerHTML={{ __html: session.htmlContent }}
-          />
+          <button
+            onClick={() => setCompleted(true)}
+            className={`btn-validate ${completed ? "done" : ""}`}
+          >
+            {completed ? "✓ Session validée" : "Marquer comme terminée"}
+          </button>
 
-          {/* Validation & Navigation ultra-rapide */}
-          <div className="reader-nav">
-            {prevId ? (
-              <Link href={`/parcours/${parcours.id}/session/${prevId}`} prefetch={true} className="btn-nav">
-                ← Session {prevId}
-              </Link>
-            ) : <div />}
-
-            <button
-              onClick={() => setCompleted(true)}
-              className={`btn-validate ${completed ? "done" : ""}`}
-            >
-              {completed ? "✓ Session validée" : "Marquer comme terminée"}
-            </button>
-
-            {nextId ? (
-              <Link href={`/parcours/${parcours.id}/session/${nextId}`} prefetch={true} className="btn-nav">
-                Session {nextId} →
-              </Link>
-            ) : (
-              <div style={{fontFamily:"'IBM Plex Mono',monospace",fontSize:"0.72rem",color:"var(--ink-muted)"}}>
-                Fin du Tome 0
-              </div>
-            )}
-          </div>
+          {nextId ? (
+            <Link href={`/parcours/${parcours.id}/session/${nextId}`} prefetch={true} className="btn-nav">
+              Session {nextId} →
+            </Link>
+          ) : (
+            <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.72rem", color: "var(--ink-muted)" }}>
+              Fin du Tome 0
+            </div>
+          )}
         </div>
       </div>
     </NavigationLayout>
+  );
+}
