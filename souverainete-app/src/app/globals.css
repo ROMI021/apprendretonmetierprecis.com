@@ -58,6 +58,8 @@ body {
 .app-shell {
   display: flex;
   min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 /* ─── SIDEBAR ───────────────────────────────────────────────────────────────── */
@@ -184,7 +186,9 @@ body {
 /* ─── CONTENT ───────────────────────────────────────────────────────────────── */
 .content-area {
   margin-left: var(--sidebar-width);
+  width: calc(100% - var(--sidebar-width));
   flex: 1;
+  min-width: 0;
   background: var(--content-bg);
   min-height: 100vh;
   display: flex;
@@ -244,8 +248,7 @@ body {
 
 /* ─── HOME PAGE ─────────────────────────────────────────────────────────────── */
 .home-wrapper {
-  padding: 48px 40px 80px;
-  max-width: 900px;
+  padding: 48px 56px 80px;
   width: 100%;
 }
 
@@ -423,7 +426,8 @@ body {
 
 /* ─── SESSION LIST ──────────────────────────────────────────────────────────── */
 .sessions-wrapper {
-  padding: 32px 40px 80px;
+  padding: 32px 56px 80px;
+  width: 100%;
 }
 
 .tome-section { margin-bottom: 32px; }
@@ -510,7 +514,7 @@ body {
 
 .reader-wrapper {
   padding: 40px 56px 80px;
-  max-width: 860px;
+  width: 100%;
 }
 
 .reader-eyebrow {
@@ -773,8 +777,8 @@ code {
 
 /* ─── JOURNAL PAGE ──────────────────────────────────────────────────────────── */
 .journal-wrapper {
-  padding: 40px;
-  max-width: 760px;
+  padding: 40px 56px 80px;
+  width: 100%;
 }
 
 .streak-card {
@@ -862,7 +866,7 @@ code {
 @media (max-width: 768px) {
   .sidebar { display: none; }
   .content-area { margin-left: 0; }
-  .reader-wrapper { padding: 24px 20px 60px; }
+  .reader-wrapper { padding: 24px 20px 60px; width: 100%; }
   .home-wrapper { padding: 28px 20px 60px; }
   .sessions-wrapper { padding: 24px 20px 60px; }
 }
@@ -871,5 +875,5 @@ code {
 @media print {
   .sidebar, .topbar, .reader-nav { display: none !important; }
   .content-area { margin-left: 0; }
-  .reader-wrapper { padding: 20px; max-width: 100%; }
+  .reader-wrapper { padding: 20px; width: 100%; }
 }
