@@ -2,38 +2,120 @@
 
 import { useState, useEffect } from "react";
 
+const STORAGE_KEYS = {
+  END_TIME: "pomodoro_end_timestamp",
+  IS_ACTIVE: "pomodoro_is_active",
+  MODE: "pomodoro_mode",
+  REMAINING_PAUSED: "pomodoro_remaining_paused",
+  DURATION: "pomodoro_duration",
+};
+
 export default function PomodoroTimer() {
   const [secondsLeft, setSecondsLeft] = useState(25 * 60);
   const [isActive, setIsActive] = useState(false);
   const [mode, setMode] = useState<"work" | "break">("work");
+  const [duration, setDuration] = useState(25 * 60);
 
+  // Restauration de l'état du Pomodoro depuis localStorage au chargement
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const savedIsActive = localStorage.getItem(STORAGE_KEYS.IS_ACTIVE) === "true";
+    const savedMode = (localStorage.getItem(STORAGE_KEYS.MODE) as "work" | "break") || "work";
+    const savedDuration = parseInt(localStorage.getItem(STORAGE_KEYS.DURATION) || "1500", 10);
+    const savedEndTime = parseInt(localStorage.getItem(STORAGE_KEYS.END_TIME) || "0", 10);
+    const savedPausedRemaining = parseInt(localStorage.getItem(STORAGE_KEYS.REMAINING_PAUSED) || "1500", 10);
+
+    setMode(savedMode);
+    setDuration(savedDuration);
+
+    if (savedIsActive && savedEndTime > 0) {
+      const now = Date.now();
+      const remainingSecs = Math.max(0, Math.round((savedEndTime - now) / 1000));
+      if (remainingSecs > 0) {
+        setSecondsLeft(remainingSecs);
+        setIsActive(true);
+      } else {
+        // Le temps était écoulé pendant l'absence
+        setSecondsLeft(0);
+        setIsActive(false);
+      }
+    } else {
+      setIsActive(false);
+      setSecondsLeft(savedPausedRemaining);
+    }
+  }, []);
+
+  // Décompte temps réel et sauvegarde continue
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
 
-    if (isActive && secondsLeft > 0) {
+    if (isActive) {
       interval = setInterval(() => {
-        setSecondsLeft((prev) => prev - 1);
+        const savedEndTime = parseInt(localStorage.getItem(STORAGE_KEYS.END_TIME) || "0", 10);
+        if (savedEndTime > 0) {
+          const now = Date.now();
+          const remainingSecs = Math.max(0, Math.round((savedEndTime - now) / 1000));
+
+          if (remainingSecs > 0) {
+            setSecondsLeft(remainingSecs);
+          } else {
+            // Fin du chrono
+            setSecondsLeft(0);
+            setIsActive(false);
+            localStorage.setItem(STORAGE_KEYS.IS_ACTIVE, "false");
+
+            if (mode === "work") {
+              alert("⏱️ Session de concentration terminée ! Prenez 5 minutes de pause.");
+              startPreset(5, "break");
+            } else {
+              alert("🔔 Pause terminée ! Prêt à reprendre l'étude ?");
+              startPreset(25, "work");
+            }
+          }
+        }
       }, 1000);
-    } else if (secondsLeft === 0 && isActive) {
-      if (mode === "work") {
-        setMode("break");
-        setSecondsLeft(5 * 60);
-        alert("⏱️ Session de concentration terminée ! 5 minutes de pause.");
-      } else {
-        setMode("work");
-        setSecondsLeft(25 * 60);
-        alert("🔔 Pause terminée ! Prêt à reprendre l'étude ?");
-      }
-      setIsActive(false);
     }
 
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [isActive, secondsLeft, mode]);
+  }, [isActive, mode]);
 
   const toggleTimer = () => {
-    setIsActive(!isActive);
+    if (typeof window === "undefined") return;
+
+    if (!isActive) {
+      // Démarrage : calculer le timestamp de fin absolu
+      const endTime = Date.now() + secondsLeft * 1000;
+      localStorage.setItem(STORAGE_KEYS.END_TIME, endTime.toString());
+      localStorage.setItem(STORAGE_KEYS.IS_ACTIVE, "true");
+      localStorage.setItem(STORAGE_KEYS.MODE, mode);
+      localStorage.setItem(STORAGE_KEYS.DURATION, duration.toString());
+      setIsActive(true);
+    } else {
+      // Pause manuelle par l'utilisateur
+      localStorage.setItem(STORAGE_KEYS.IS_ACTIVE, "false");
+      localStorage.setItem(STORAGE_KEYS.REMAINING_PAUSED, secondsLeft.toString());
+      setIsActive(false);
+    }
+  };
+
+  const startPreset = (minutes: number, timerMode: "work" | "break" = "work") => {
+    const totalSecs = minutes * 60;
+    const endTime = Date.now() + totalSecs * 1000;
+
+    setMode(timerMode);
+    setDuration(totalSecs);
+    setSecondsLeft(totalSecs);
+    setIsActive(true);
+
+    if (typeof window !== "undefined") {
+      localStorage.setItem(STORAGE_KEYS.END_TIME, endTime.toString());
+      localStorage.setItem(STORAGE_KEYS.IS_ACTIVE, "true");
+      localStorage.setItem(STORAGE_KEYS.MODE, timerMode);
+      localStorage.setItem(STORAGE_KEYS.DURATION, totalSecs.toString());
+    }
   };
 
   const formatTime = (secs: number) => {
@@ -54,7 +136,7 @@ export default function PomodoroTimer() {
       fontFamily: "'IBM Plex Mono', monospace",
       fontSize: "0.78rem"
     }}>
-      {/* Icone */}
+      {/* Icone Mode */}
       <span style={{ fontSize: "0.85rem" }}>{mode === "work" ? "⏱️" : "☕"}</span>
 
       {/* Compteur MM:SS */}
@@ -66,7 +148,7 @@ export default function PomodoroTimer() {
         {formatTime(secondsLeft)}
       </span>
 
-      {/* Bouton Play/Pause unique */}
+      {/* Bouton Play/Pause unique commandé par l'apprenant */}
       <button
         onClick={toggleTimer}
         title={isActive ? "Mettre en pause" : "Démarrer le Pomodoro"}
