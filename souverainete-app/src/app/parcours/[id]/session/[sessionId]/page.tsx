@@ -8,7 +8,9 @@ import PomodoroTimer from "@/components/PomodoroTimer";
 
 declare global {
   interface Window {
-    MathJax?: { typesetPromise?: () => Promise<void> };
+    MathJax?: {
+      typesetPromise?: (elements?: Element[]) => Promise<void>;
+    };
   }
 }
 
@@ -19,11 +21,15 @@ export default function SessionPage({ params }: { params: Promise<{ id: string; 
   const session = parcours?.sessions.find((s) => s.id === sessionNum);
   const [completed, setCompleted] = useState(false);
 
+  // Déclenchement optimisé de MathJax uniquement sur le conteneur de cours
   useEffect(() => {
     if (typeof window !== "undefined" && window.MathJax?.typesetPromise) {
-      window.MathJax.typesetPromise();
+      const container = document.getElementById("course-content-container");
+      if (container) {
+        window.MathJax.typesetPromise([container]);
+      }
     }
-  }, [session]);
+  }, [sessionId, session]);
 
   if (!parcours || !session) return notFound();
 
@@ -68,6 +74,7 @@ export default function SessionPage({ params }: { params: Promise<{ id: string; 
             <Link
               key={s.id}
               href={`/parcours/${parcours.id}/session/${s.id}`}
+              prefetch={true}
               className={`sidebar-nav-item ${s.id === sessionNum ? "active" : ""}`}
               style={{paddingLeft:"16px", fontSize:"0.78rem"}}
             >
@@ -153,15 +160,16 @@ export default function SessionPage({ params }: { params: Promise<{ id: string; 
             </div>
           )}
 
-          {/* Exact HTML content with MathJax rendering */}
+          {/* Exact HTML content avec rendu MathJax ciblé */}
           <div
+            id="course-content-container"
             dangerouslySetInnerHTML={{ __html: session.htmlContent }}
           />
 
-          {/* Validation & Navigation */}
+          {/* Validation & Navigation ultra-rapide */}
           <div className="reader-nav">
             {prevId ? (
-              <Link href={`/parcours/${parcours.id}/session/${prevId}`} className="btn-nav">
+              <Link href={`/parcours/${parcours.id}/session/${prevId}`} prefetch={true} className="btn-nav">
                 ← Session {prevId}
               </Link>
             ) : <div />}
@@ -174,7 +182,7 @@ export default function SessionPage({ params }: { params: Promise<{ id: string; 
             </button>
 
             {nextId ? (
-              <Link href={`/parcours/${parcours.id}/session/${nextId}`} className="btn-nav">
+              <Link href={`/parcours/${parcours.id}/session/${nextId}`} prefetch={true} className="btn-nav">
                 Session {nextId} →
               </Link>
             ) : (
