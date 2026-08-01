@@ -1,4 +1,4 @@
-export interface SessionData {
+﻿export interface SessionData {
   id: number;
   title: string;
   tome: string;
@@ -122,27 +122,54 @@ export const PARCOURS_DATA: Parcours[] = [
               </div>
 
               <div class="exercise-section">
-                  <div class="exercise-title">✍️ Exercice d'Application 1.1 (À rédiger sur papier)</div>
+                  <div class="exercise-title">✍️ Exercice 1.1 — Direct (À rédiger sur papier)</div>
                   <p>1. Convertis le nombre décimal $N = 214$ en binaire en posant toutes les divisions par 2.</p>
-                  <p>2. Convertis le nombre binaire $B = 01101010_2$ en décimal en écrivant la somme détaillée.</p>
-
+                  <p>2. Convertis le nombre binaire $B = 01101010_2$ en décimal en écrivant la somme des puissances.</p>
                   <details>
-                      <summary>Consulter la correction détaillée (Fais l'exercice avant de regarder !)</summary>
+                      <summary>Consulter la correction (Fais l'exercice avant !)</summary>
                       <div class="solution-details">
                           <strong>Solution 1 :</strong><br>
-                          214 ÷ 2 = 107 (reste 0)<br>
-                          107 ÷ 2 = 53 (reste 1)<br>
-                          53 ÷ 2 = 26 (reste 1)<br>
-                          26 ÷ 2 = 13 (reste 0)<br>
-                          13 ÷ 2 = 6 (reste 1)<br>
-                          6 ÷ 2 = 3 (reste 0)<br>
-                          3 ÷ 2 = 1 (reste 1)<br>
-                          1 ÷ 2 = 0 (reste 1)<br>
-                          Lecture de bas en haut $\\rightarrow$ <strong>11010110₂</strong>.<br><br>
-
+                          214 ÷ 2 = 107 r.0 | 107 ÷ 2 = 53 r.1 | 53 ÷ 2 = 26 r.1 | 26 ÷ 2 = 13 r.0<br>
+                          13 ÷ 2 = 6 r.1 | 6 ÷ 2 = 3 r.0 | 3 ÷ 2 = 1 r.1 | 1 ÷ 2 = 0 r.1<br>
+                          Lecture de bas en haut $\\rightarrow$ <strong>$11010110_2$</strong><br><br>
                           <strong>Solution 2 :</strong><br>
-                          $01101010_2 = (0 \\times 128) + (1 \\times 64) + (1 \\times 32) + (0 \\times 16) + (1 \\times 8) + (0 \\times 4) + (1 \\times 2) + (0 \\times 1)$<br>
-                          $= 64 + 32 + 8 + 2 = \\mathbf{106}_{10}$.
+                          $01101010_2 = (1{\\times}64)+(1{\\times}32)+(1{\\times}8)+(1{\\times}2) = 64+32+8+2 = \\mathbf{106}_{10}$
+                      </div>
+                  </details>
+              </div>
+
+              <div class="exercise-section">
+                  <div class="exercise-title">🧩 Exercice 1.2 — Intermédiaire (Raisonnement en deux sens)</div>
+                  <p>1. Un registre d'état d'un processeur vaut $N = 185_{10}$. Convertis-le en binaire sur 8 bits. Quels bits (Bit 7 à Bit 0) sont à 1 ?</p>
+                  <p>2. Un capteur renvoie la valeur binaire $11000011_2$. Quelle est sa valeur décimale ? Est-elle supérieure à 190 ?</p>
+                  <details>
+                      <summary>Consulter la correction</summary>
+                      <div class="solution-details">
+                          <strong>Solution 1 :</strong><br>
+                          185 ÷ 2 = 92 r.1 | 92 ÷ 2 = 46 r.0 | 46 ÷ 2 = 23 r.0 | 23 ÷ 2 = 11 r.1<br>
+                          11 ÷ 2 = 5 r.1 | 5 ÷ 2 = 2 r.1 | 2 ÷ 2 = 1 r.0 | 1 ÷ 2 = 0 r.1<br>
+                          $\\rightarrow \\mathbf{10111001_2}$ — Bits à 1 : Bit 7, Bit 5, Bit 4, Bit 3, Bit 0<br><br>
+                          <strong>Solution 2 :</strong><br>
+                          $11000011_2 = 128+64+2+1 = \\mathbf{195}_{10}$ — Oui, supérieure à 190.
+                      </div>
+                  </details>
+              </div>
+
+              <div class="exercise-section">
+                  <div class="exercise-title">🔥 Exercice 1.3 — Défi Défense (Application critique)</div>
+                  <p>Un calculateur de vol embarqué utilise un registre de 8 bits pour stocker l'angle de tangage. La valeur $10110100_2$ est lue.</p>
+                  <p>1. Détermine la valeur décimale de ce registre.</p>
+                  <p>2. Si le Bit 7 (MSB) à 1 signifie «&nbsp;piqué critique&nbsp;», ce drone est-il en situation d'urgence ?</p>
+                  <p>3. Quel est le complément à 1 de $10110100_2$ ? (Inverse tous les bits)</p>
+                  <details>
+                      <summary>Consulter la correction</summary>
+                      <div class="solution-details">
+                          <strong>Solution 1 :</strong><br>
+                          $10110100_2 = 128+32+16+4 = \\mathbf{180}_{10}$<br><br>
+                          <strong>Solution 2 :</strong><br>
+                          Le Bit 7 vaut 1 $\\rightarrow$ Le drone est en <strong>situation de piqué critique</strong>. Le système doit déclencher la correction d'urgence.<br><br>
+                          <strong>Solution 3 :</strong><br>
+                          Complément à 1 de $10110100$ : inverser chaque bit $\\rightarrow \\mathbf{01001011_2} = 75_{10}$.
                       </div>
                   </details>
               </div>
@@ -198,17 +225,55 @@ export const PARCOURS_DATA: Parcours[] = [
               </div>
 
               <div class="exercise-section">
-                  <div class="exercise-title">✍️ Exercice d'Application 2.1</div>
-                  <p>1. Convertis le binaire $10101111_2$ directement en hexadécimal.</p>
+                  <div class="exercise-title">✍️ Exercice 2.1 — Direct (Conversions Hex ↔ Binaire)</div>
+                  <p>1. Convertis le binaire $10101111_2$ directement en hexadécimal par blocs de 4 bits.</p>
                   <p>2. Convertis la valeur hexadécimale $0xB4$ en binaire sur 8 bits.</p>
                   <p>3. Calcule la valeur décimale de $0xA5$.</p>
-
                   <details>
-                      <summary>Consulter la correction détaillée</summary>
+                      <summary>Consulter la correction</summary>
                       <div class="solution-details">
-                          <strong>Solution 1 :</strong> Groupes : $1010_2 = 10 \\rightarrow \\mathbf{A}$ et $1111_2 = 15 \\rightarrow \\mathbf{F}$. Résultat : <strong>0xAF</strong>.<br>
-                          <strong>Solution 2 :</strong> $\\mathbf{B} = 11 \\rightarrow 1011_2$ et $\\mathbf{4} \\rightarrow 0100_2$. Résultat : <strong>10110100₂</strong>.<br>
-                          <strong>Solution 3 :</strong> $0xA5 = (A \\times 16) + 5 = (10 \\times 16) + 5 = 160 + 5 = \\mathbf{165}_{10}$.
+                          <strong>Solution 1 :</strong> $1010_2 \\rightarrow A$, $1111_2 \\rightarrow F$ $\\Rightarrow$ <strong>0xAF</strong><br>
+                          <strong>Solution 2 :</strong> $B = 11 \\rightarrow 1011_2$, $4 \\rightarrow 0100_2$ $\\Rightarrow$ <strong>$10110100_2$</strong><br>
+                          <strong>Solution 3 :</strong> $0xA5 = (10{\\times}16) + 5 = 160 + 5 = \\mathbf{165}_{10}$
+                      </div>
+                  </details>
+              </div>
+
+              <div class="exercise-section">
+                  <div class="exercise-title">🧩 Exercice 2.2 — Intermédiaire (Adresses mémoire)</div>
+                  <p>Un débogueur affiche l'adresse mémoire suivante : <code>0x1F4A</code></p>
+                  <p>1. Convertis $0x1F4A$ en binaire complet (16 bits).</p>
+                  <p>2. Donne la valeur décimale de $0x1F4A$.</p>
+                  <details>
+                      <summary>Consulter la correction</summary>
+                      <div class="solution-details">
+                          <strong>Solution 1 :</strong><br>
+                          $1 \\rightarrow 0001$, $F \\rightarrow 1111$, $4 \\rightarrow 0100$, $A \\rightarrow 1010$<br>
+                          $\\Rightarrow \\mathbf{0001\ 1111\ 0100\ 1010_2}$<br><br>
+                          <strong>Solution 2 :</strong><br>
+                          $0x1F4A = (1{\\times}16^3)+(F{\\times}16^2)+(4{\\times}16^1)+(A{\\times}16^0)$<br>
+                          $= 4096 + 3840 + 64 + 10 = \\mathbf{8010}_{10}$
+                      </div>
+                  </details>
+              </div>
+
+              <div class="exercise-section">
+                  <div class="exercise-title">🔥 Exercice 2.3 — Défi Défense (Dump mémoire)</div>
+                  <p>Un dump de mémoire d'un bus CAN embarqué (défense) affiche 4 octets consécutifs :</p>
+                  <p><code>0xDE 0xAD 0xBE 0xEF</code></p>
+                  <p>1. Donne la valeur décimale de chaque octet.</p>
+                  <p>2. Quel est l'octet de plus grande valeur décimale ?</p>
+                  <p>3. En quel binaire s'écrit l'octet <code>0xBE</code> ?</p>
+                  <details>
+                      <summary>Consulter la correction</summary>
+                      <div class="solution-details">
+                          <strong>Solution 1 :</strong><br>
+                          $0xDE = (13{\\times}16)+14 = 208+14 = \\mathbf{222}_{10}$<br>
+                          $0xAD = (10{\\times}16)+13 = 160+13 = \\mathbf{173}_{10}$<br>
+                          $0xBE = (11{\\times}16)+14 = 176+14 = \\mathbf{190}_{10}$<br>
+                          $0xEF = (14{\\times}16)+15 = 224+15 = \\mathbf{239}_{10}$<br><br>
+                          <strong>Solution 2 :</strong> L'octet de plus grande valeur est <strong>0xEF = 239</strong><br><br>
+                          <strong>Solution 3 :</strong> $0xBE : B=1011, E=1110 \\Rightarrow \\mathbf{10111110_2}$
                       </div>
                   </details>
               </div>
@@ -289,17 +354,53 @@ export const PARCOURS_DATA: Parcours[] = [
               </div>
 
               <div class="exercise-section">
-                  <div class="exercise-title">✍️ Exercice d'Application 3.1</div>
-                  <p>Soit l'équation de tir d'un drone : $Tir = (Alti\\_OK \\cdot \\bar{Obstacle}) \\cdot Autorisation$.</p>
-                  <p>Calcule la valeur de $Tir$ pour les cas suivants :</p>
-                  <p>1. $Alti\\_OK = 1$, $Obstacle = 1$, $Autorisation = 1$</p>
-                  <p>2. $Alti\\_OK = 1$, $Obstacle = 0$, $Autorisation = 1$</p>
-
+                  <div class="exercise-title">✍️ Exercice 3.1 — Direct (Évaluation Booléenne)</div>
+                  <p>Soit l'équation de tir d'un drone : $Tir = (Alti\\_OK \\cdot \\bar{Obstacle}) \\cdot Autorisation$</p>
+                  <p>1. $Alti\\_OK = 1$, $Obstacle = 1$, $Autorisation = 1$ — Le tir a-t-il lieu ?</p>
+                  <p>2. $Alti\\_OK = 1$, $Obstacle = 0$, $Autorisation = 1$ — Le tir a-t-il lieu ?</p>
                   <details>
-                      <summary>Consulter la correction détaillée</summary>
+                      <summary>Consulter la correction</summary>
                       <div class="solution-details">
-                          <strong>Solution 1 :</strong> $Obstacle = 1 \\Rightarrow \\bar{Obstacle} = 0$. Donc $Tir = (1 \\cdot 0) \\cdot 1 = 0 \\cdot 1 = \\mathbf{0}$ (Le tir est bloqué car obstacle présent !).<br>
-                          <strong>Solution 2 :</strong> $Obstacle = 0 \\Rightarrow \\bar{Obstacle} = 1$. Donc $Tir = (1 \\cdot 1) \\cdot 1 = 1 \\cdot 1 = \\mathbf{1}$ (Tir autorisé !).
+                          <strong>Solution 1 :</strong> $\\bar{Obstacle}=\\bar{1}=0 \\Rightarrow Tir=(1{\\cdot}0){\\cdot}1=\\mathbf{0}$ — Tir bloqué (obstacle présent).<br>
+                          <strong>Solution 2 :</strong> $\\bar{Obstacle}=\\bar{0}=1 \\Rightarrow Tir=(1{\\cdot}1){\\cdot}1=\\mathbf{1}$ — Tir autorisé.
+                      </div>
+                  </details>
+              </div>
+
+              <div class="exercise-section">
+                  <div class="exercise-title">🧩 Exercice 3.2 — Intermédiaire (Tables de vérité)</div>
+                  <p>Construis la table de vérité complète de la fonction : $F = (A + B) \\cdot \\bar{C}$</p>
+                  <p>Donne les 8 combinaisons possibles (A, B, C) et calcule $F$ pour chacune.</p>
+                  <details>
+                      <summary>Consulter la correction</summary>
+                      <div class="solution-details">
+                          <table class="math-table"><tr><th>A</th><th>B</th><th>C</th><th>A+B</th><th>$\\bar{C}$</th><th>F</th></tr>
+                          <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td><strong>0</strong></td></tr>
+                          <tr><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td><strong>0</strong></td></tr>
+                          <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td><strong>1</strong></td></tr>
+                          <tr><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td><td><strong>0</strong></td></tr>
+                          <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td><strong>1</strong></td></tr>
+                          <tr><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td><strong>0</strong></td></tr>
+                          <tr><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td><strong>1</strong></td></tr>
+                          <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td><strong>0</strong></td></tr></table>
+                      </div>
+                  </details>
+              </div>
+
+              <div class="exercise-section">
+                  <div class="exercise-title">🔥 Exercice 3.3 — Défi Défense (Circuit d'autorisation de tir)</div>
+                  <p>Un système d'arme ne doit tirer <strong>que si</strong> : la cible est détectée ET la distance est correcte ET la sécurité est désactivée ET (le commandant OU l'IA) autorise.</p>
+                  <p>Écris l'équation booléenne $Tir$ correspondant à ces contraintes en utilisant les variables :<br>
+                  $D$ = Cible détectée, $Dist$ = Distance OK, $S$ = Sécurité désactivée, $Cmd$ = Commandant, $IA$ = Intelligence artificielle.</p>
+                  <p>Évalue ensuite $Tir$ pour $D=1, Dist=1, S=0, Cmd=1, IA=0.</p>
+                  <details>
+                      <summary>Consulter la correction</summary>
+                      <div class="solution-details">
+                          <strong>Équation :</strong> $Tir = D \\cdot Dist \\cdot S \\cdot (Cmd + IA)$<br><br>
+                          <strong>Évaluation :</strong><br>
+                          $Cmd + IA = 1 + 0 = 1$<br>
+                          $Tir = 1 \\cdot 1 \\cdot 0 \\cdot 1 = \\mathbf{0}$<br>
+                          Le tir est bloqué : la sécurité ($S=0$) n'est pas désactivée.
                       </div>
                   </details>
               </div>
@@ -354,15 +455,47 @@ if (vitesse > 200) {
               </div>
 
               <div class="exercise-section">
-                  <div class="exercise-title">✍️ Exercice d'Application 4.1</div>
+                  <div class="exercise-title">✍️ Exercice 4.1 — Direct (Calcul d'Overflow)</div>
                   <p>Une variable de 8 bits contient la valeur 200. On lui ajoute 70. Quelle sera la valeur finale retenue par le registre ? (Pose le calcul $270 \\text{ mod } 256$).</p>
-
                   <details>
-                      <summary>Consulter la correction détaillée</summary>
+                      <summary>Consulter la correction</summary>
                       <div class="solution-details">
-                          La valeur réelle est 270. Puisque la capacité maximale est 255, le registre effectue le modulo 256 :<br>
-                          $270 - 256 = \\mathbf{14}$.<br>
-                          Le registre contiendra la valeur 14.
+                          $200 + 70 = 270$. La plage maximale est $[0, 255]$.<br>
+                          $270 \\text{ mod } 256 = 270 - 256 = \\mathbf{14}$<br>
+                          Le registre contiendra <strong>14</strong> au lieu de 270.
+                      </div>
+                  </details>
+              </div>
+
+              <div class="exercise-section">
+                  <div class="exercise-title">🧩 Exercice 4.2 — Intermédiaire (Overflow sur 16 bits)</div>
+                  <p>Un registre 16 bits non signé contient la valeur maximale $65\ 535$. On effectue l'addition $+1$.</p>
+                  <p>1. Quelle valeur le registre affiche-t-il après l'opération ?</p>
+                  <p>2. Exprime $65\ 535$ en hexadécimal.</p>
+                  <details>
+                      <summary>Consulter la correction</summary>
+                      <div class="solution-details">
+                          <strong>Solution 1 :</strong><br>
+                          $65\ 535 + 1 = 65\ 536$. Mais $65\ 536 \\text{ mod } 65\ 536 = \\mathbf{0}$<br>
+                          Le registre revient à <strong>0</strong> — overflow total.<br><br>
+                          <strong>Solution 2 :</strong><br>
+                          $65\ 535 = 2^{16}-1 = 16 \\times 4096 - 1 \\Rightarrow \\mathbf{0xFFFF}$
+                      </div>
+                  </details>
+              </div>
+
+              <div class="exercise-section">
+                  <div class="exercise-title">🔥 Exercice 4.3 — Défi Défense (Bug de compteur de missile)</div>
+                  <p>Un compteur de trajectoire sur 8 bits non signé part de la valeur 250 et est incrémenté de 1 à chaque milliseconde.</p>
+                  <p>1. Après combien de millisecondes le compteur déborde-t-il ?</p>
+                  <p>2. Quelle valeur affiche-t-il après le débordement ?</p>
+                  <p>3. Si le système déclenche l'autodestruction uniquement quand le compteur <strong>dépasse 240</strong>, combien de cycles de faux-positifs le bug génère-t-il avant que le compteur repasse sous 240 ?</p>
+                  <details>
+                      <summary>Consulter la correction</summary>
+                      <div class="solution-details">
+                          <strong>Solution 1 :</strong> $255 - 250 + 1 = \\mathbf{6}$ ms avant débordement.<br><br>
+                          <strong>Solution 2 :</strong> Après le débordement, le compteur vaut $\\mathbf{0}$.<br><br>
+                          <strong>Solution 3 :</strong> Le compteur repart de 0 et dépasse 240 à nouveau après 241 ms. Il génère donc <strong>0 faux-positif</strong> puisqu'entre 0 et 240 la condition est fausse — mais le système a raté les valeurs critiques 241→255 du cycle suivant sans vérification.
                       </div>
                   </details>
               </div>
@@ -411,6 +544,48 @@ if (vitesse > 200) {
                           $S = 1 \\cdot 1 = \\mathbf{1}$.
                       </div>
                   </details>
+
+              <div class="exercise-section">
+                  <div class="exercise-title">🧩 Exercice 5.2 — Approfondissement (Calcul Combiné)</div>
+                  <p><strong>Problème 4 (5 points) :</strong> Un système de navigation d'un missile lit deux registres 8 bits :</p>
+                  <p>Registre X = $0xC3$ &nbsp; Registre Y = $01101001_2$</p>
+                  <p>1. Convertis les deux en décimal.</p>
+                  <p>2. Additionne-les. Y a-t-il overflow sur 8 bits ?</p>
+                  <p>3. Quelle valeur le registre de résultat contient-il si codé sur 8 bits ?</p>
+                  <details>
+                      <summary>Consulter le Corrigé</summary>
+                      <div class="solution-details">
+                          <strong>Solution 1 :</strong><br>
+                          $0xC3 = (12{\\times}16)+3 = 192+3 = \\mathbf{195}_{10}$<br>
+                          $01101001_2 = 64+32+8+1 = \\mathbf{105}_{10}$<br><br>
+                          <strong>Solution 2 :</strong><br>
+                          $195 + 105 = 300 > 255$ donc <strong>overflow</strong> sur 8 bits.<br><br>
+                          <strong>Solution 3 :</strong><br>
+                          $300 \\text{ mod } 256 = 300 - 256 = \\mathbf{44}$ — Le registre contient 44.
+                      </div>
+                  </details>
+              </div>
+
+              <div class="exercise-section">
+                  <div class="exercise-title">🔥 Exercice 5.3 — Défi Final (Système complet)</div>
+                  <p><strong>Problème 5 (8 points) :</strong> $Feu = (Cible \\cdot \\bar{Brouillard}) + (LaserActif \\cdot Distance\\_OK)$</p>
+                  <p>Capteurs : Cible=$0x01$, Brouillard=$0x00$, Laser=$0x01$, Distance=$0xA0$</p>
+                  <p>1. Convertis chaque valeur en booléen ($0x00=0$, tout autre = 1).</p>
+                  <p>2. Convertis $0xA0$ en décimal. La distance est-elle OK si le seuil minimal est $128_{10}$ ?</p>
+                  <p>3. Calcule la valeur finale de $Feu$.</p>
+                  <details>
+                      <summary>Consulter le Corrigé Intégral</summary>
+                      <div class="solution-details">
+                          <strong>Solution 1 :</strong> $0x01 \\rightarrow 1$, $0x00 \\rightarrow 0$, $0x01 \\rightarrow 1$<br><br>
+                          <strong>Solution 2 :</strong> $0xA0 = 10 \\times 16 = \\mathbf{160}_{10} > 128$ donc $Distance\\_OK = 1$<br><br>
+                          <strong>Solution 3 :</strong><br>
+                          $\\bar{Brouillard} = \\bar{0} = 1$<br>
+                          $(Cible \\cdot \\bar{Brouillard}) = 1 \\cdot 1 = 1$<br>
+                          $(Laser \\cdot Distance\\_OK) = 1 \\cdot 1 = 1$<br>
+                          $Feu = 1 + 1 = \\mathbf{1}$ — Tir autorisé.
+                      </div>
+                  </details>
+              </div>
               </div>
           </div>
         `
